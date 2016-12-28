@@ -12,6 +12,7 @@ import javax.persistence.Table;
 public class Footballer {
 
 	@Id
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
