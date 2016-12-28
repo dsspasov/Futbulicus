@@ -3,8 +3,14 @@ package com.fmi.futbulicus.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,50 +25,61 @@ public class UserController {
 
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private UserDetailsService userDetailsManager;
+	@Autowired
+    private AuthenticationManager authenticationManager;
 	
 	@RequestMapping(value="/login", method = RequestMethod.GET)
 	public String loginGet(HttpServletRequest request, HttpSession session, Model model){
 		if(session.getAttribute("user") != null) {
 			return "home";
 		} else {
-			return "/login";
-		}
-	}
-	
-	@RequestMapping(value="/login", method = RequestMethod.POST)
-	public String loginPost(HttpSession session, @RequestParam("name") String name, @RequestParam("password") String password){
-		String hashedPassword = DigestUtils.md5Hex(password);
-		User user = userRepository.findByNameAndPassword(name, hashedPassword);
-		if(user != null) {
-			session.setAttribute("user", user);
-			return "redirect:/home";
-		} else {
 			return "login";
 		}
 	}
 	
+	
 	@RequestMapping(value="/register", method = RequestMethod.GET)
-	public String registerGet(HttpSession session){
+	public String registerGet(Authentication auth, HttpSession session){
 		if(session.getAttribute("user") != null) {
 			return "home";
 		} else {
-			return "/register";
+			return "register";
 		}
 	}
 	
 	@RequestMapping(value="/register", method = RequestMethod.POST)
-	public String registerPost(HttpSession session, @RequestParam("name") String name, @RequestParam("password") String password){
-		User user = userRepository.findByName(name);
+	public String registerPost(HttpSession session, @RequestParam("username") String name, @RequestParam("password") String password){
+		User user = userRepository.findByUsername(name);
+		System.out.println("user1");
 		if(user != null) {
-			return "register";
+			System.out.println("user2");
+			UserDetails userDetails = userDetailsManager.loadUserByUsername(user.getUsername());
+			UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(),
+					userDetails.getAuthorities());
+	        authenticationManager.authenticate(auth);
+			return "home";
 		} else {
-			String hashedPassword = DigestUtils.md5Hex(password);
+			String hashedPassword = passwordEncoder.encode(password);
 			User newUser = new User();
-			newUser.setName(name);
+			newUser.setUsername(name);
 			newUser.setPassword(hashedPassword);
+			newUser.setRole("USER");
 			newUser = userRepository.save(newUser);
-			session.setAttribute("user", newUser);
-			return "redirect:/home";
+			//authentication
+			UserDetails userDetails = userDetailsManager.loadUserByUsername(newUser.getUsername());
+			UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(),
+					userDetails.getAuthorities());
+	        authenticationManager.authenticate(auth);
+			SecurityContextHolder.getContext().setAuthentication(auth);
+			
+			session.setAttribute("currentUser", newUser);
+			System.out.println("user3");
+			return "home";
 		}
 	}
 	
@@ -73,11 +90,5 @@ public class UserController {
 		} else {
 			return "login";
 		}
-	}
-	
-	@RequestMapping(value="/logout", method = RequestMethod.GET)
-	public String logout(HttpSession session){
-		session.invalidate();
-		return "redirect:login";
 	}
 }
