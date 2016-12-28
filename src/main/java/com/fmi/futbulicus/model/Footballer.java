@@ -5,10 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "footballer")
+@Table(name = "footballers")
 public class Footballer {
 
 	@Id
@@ -22,6 +23,8 @@ public class Footballer {
 	private int age;
 	@Column(name = "kit_number")
 	private int kitNumber;
+	@ManyToOne
+	private Team team;
 	
 	public Footballer() {}
 	
