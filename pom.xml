@@ -57,13 +57,13 @@
 		</dependency>
 		
 
-		<!-- SECURITY -->
-		<!-- 
+		<!-- SECURITY --> 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		-->
+		
+
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
