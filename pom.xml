@@ -67,7 +67,7 @@
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
-		</dependecy>
+		</dependency>
 
 		<dependency>
 			<groupId>commons-codec</groupId>
