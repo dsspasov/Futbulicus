@@ -45,7 +45,6 @@
 		
 		
 		<!-- DATA -->
-		<!-- 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -55,7 +54,7 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 		</dependency>
-		 -->
+		
 
 		<!-- SECURITY -->
 		<!-- 
@@ -64,6 +63,10 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		-->
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
