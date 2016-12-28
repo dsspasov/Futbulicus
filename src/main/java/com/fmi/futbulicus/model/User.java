@@ -22,9 +22,10 @@ public class User {
 	private String username;
 	
 	@Column(name = "password", nullable = false)
+	@Size(min=0, max=60)
 	private String password;
 	
-	@Column( name = "role", nullable = false, unique = true)
+	@Column( name = "role", nullable = false)
 	@Size(min=0, max=20)
 	private String role;
 
