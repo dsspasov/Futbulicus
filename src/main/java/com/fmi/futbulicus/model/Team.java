@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name = "teams")
 public class Team {
@@ -18,15 +21,17 @@ public class Team {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Expose
 	private Long id;
 	
 	@Column(name = "name")
+	@Expose
 	private String name;
 	
 	@Column(name = "number_of_cups")
 	private int cupsWon;
 	
-	@OneToMany(mappedBy = "team")
+	@OneToMany
 	private Collection<Footballer> footballers = new ArrayList<>();
 
 	public Long getId() {
@@ -52,6 +57,8 @@ public class Team {
 	public void setCupsWon(int cupsWon) {
 		this.cupsWon = cupsWon;
 	}
+	
+	
 
 	public Collection<Footballer> getFootballers() {
 		return footballers;
@@ -63,8 +70,8 @@ public class Team {
 
 	@Override
 	public String toString() {
-		return "Team [id=" + id + ", name=" + name + ", cupsWon=" + cupsWon + "]";
+		Gson gson = new Gson();
+		return gson.toJson(this);
 	}
-	
 	
 }
