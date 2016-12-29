@@ -1,4 +1,4 @@
-package com.fmi.futbulicus.model;
+package com.fmi.futbulicus.utils;
 
 public enum Status {
 	UPCOMING,

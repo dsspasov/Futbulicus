@@ -1,5 +1,7 @@
 package com.fmi.futbulicus.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,19 +11,34 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fmi.futbulicus.utils.Status;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
 
 @Entity
 @Table (name = "matches")
+@JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.ANY, setterVisibility = Visibility.NONE)
 public class Match {
 
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Expose
 	private Long id;
 	
+	@Column(name = "date")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Expose
+	private Date date;
+	
 	@Column(name = "result")
+	@Expose
 	private String result;
 	
 	@OneToOne
@@ -40,6 +57,14 @@ public class Match {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public String getResult() {
@@ -76,7 +101,7 @@ public class Match {
 
 	@Override
 	public String toString() {
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 		return gson.toJson(this);
 	}
 	
