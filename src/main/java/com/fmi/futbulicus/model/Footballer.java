@@ -31,6 +31,9 @@ public class Footballer {
 	@Column(name = "age")
 	@Expose
 	private int age;
+	@Column(name = "nationality")
+	@Expose
+	private String nationality;
 	@Column(name = "kit_number")
 	@Expose
 	private int kitNumber;
@@ -39,6 +42,7 @@ public class Footballer {
 	@Expose
 	private Position position;
 	@ManyToOne
+	@Expose
 	private Team team;
 
 	public Long getId() {
@@ -63,6 +67,14 @@ public class Footballer {
 
 	public void setAge(int age) {
 		this.age = age;
+	}
+	
+	public String getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
 	}
 
 	public int getKitNumber() {

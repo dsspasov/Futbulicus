@@ -11,13 +11,11 @@
 <body>
 	<p>Matches</p>
 	<ul>
-    <c:forEach items="${matches}" var="match">
-        <li>
-            <a href="${pageContext.request.contextPath}/matches/match/${match.id}">
-                <c:out value="${match}"></c:out>
-            </a>
-        </li>
-    </c:forEach>
-</ul>
+		<c:forEach items="${matches}" var="match">
+			<li><a href="/matches/match/${match.id}"> <c:out
+						value="${match.host.name}${match.result}${match.guest.name}"></c:out>
+			</a></li>
+		</c:forEach>
+	</ul>
 </body>
 </html>

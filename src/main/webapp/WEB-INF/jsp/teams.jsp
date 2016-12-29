@@ -10,6 +10,12 @@
 </head>
 <body>
 	<p>Teams</p>
-	<c:out value="${team}"></c:out><br/>
+	<ul>
+		<c:forEach items="${teams}" var="team">
+			<li><a href="/teams/team/${team.id}"> <c:out
+						value="${team.name}"></c:out>
+			</a></li>
+		</c:forEach>
+	</ul>
 </body>
 </html>

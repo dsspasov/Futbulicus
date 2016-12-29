@@ -34,7 +34,6 @@ public class Match {
 	
 	@Column(name = "date")
 	@Temporal(TemporalType.TIMESTAMP)
-	@Expose
 	private Date date;
 	
 	@Column(name = "result")
@@ -42,9 +41,11 @@ public class Match {
 	private String result;
 	
 	@OneToOne
+	@Expose
 	private Team host;
 	
 	@OneToOne
+	@Expose
 	private Team guest;
 
 	@Column(name = "status")
