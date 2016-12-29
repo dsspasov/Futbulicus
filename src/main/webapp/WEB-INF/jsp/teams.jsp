@@ -9,8 +9,7 @@
 <title>Hello world</title>
 </head>
 <body>
-	<p>Matches</p>
-	<c:out value="${match}"></c:out><br/>
-	<c:out value="${matches}"></c:out><br/>
+	<p>Teams</p>
+	<c:out value="${team}"></c:out><br/>
 </body>
 </html>
