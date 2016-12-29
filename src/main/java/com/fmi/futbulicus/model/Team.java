@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -65,7 +66,7 @@ public class Team {
 	@Expose
 	private int cupsWon;
 	
-	@OneToMany(mappedBy = "team")
+	@OneToMany(mappedBy = "team", fetch = FetchType.EAGER)
 	private Collection<Footballer> footballers = new ArrayList<>();
 
 	public Long getId() {
