@@ -9,6 +9,8 @@
 <title>Hello world</title>
 </head>
 <body>
+
+	<c:import url="header.jsp"></c:import>
 	<p>Teams</p>
 	<ul>
 		<c:forEach items="${teams}" var="team">
