@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.google.gson.Gson;
+
 @Entity
 @Table(name = "footballers")
 public class Footballer {
@@ -57,13 +59,19 @@ public class Footballer {
 	public void setKitNumber(int kitNumber) {
 		this.kitNumber = kitNumber;
 	}
+	
+	public Team getTeam() {
+		return team;
+	}
+
+	public void setTeam(Team team) {
+		this.team = team;
+	}
 
 	@Override
 	public String toString() {
-		return "Footballer [id=" + id + ", name=" + name + ", age=" + age + ", kitNumber=" + kitNumber + ", team="
-				+ team + "]";
+		Gson gson = new Gson();
+		return gson.toJson(this);
 	}
 	
-	
-
 }
