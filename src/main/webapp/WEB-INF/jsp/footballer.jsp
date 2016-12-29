@@ -8,6 +8,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<c:import url="header.jsp"></c:import>
+	
 	<c:out value="${footballer.name}"></c:out><br/>
 	<c:out value="${footballer.age}"></c:out><br/>
 	<c:out value="${footballer.nationality}"></c:out><br/>
