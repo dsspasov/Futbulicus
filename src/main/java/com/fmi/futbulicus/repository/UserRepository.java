@@ -11,7 +11,7 @@ import com.fmi.futbulicus.model.User;
 @Transactional
 public interface UserRepository extends PagingAndSortingRepository<User, Integer>{
 
-	User findByName(String name);
+	User findByUsername(String username);
 
-	User findByNameAndPassword(String name, String password);
+	User findByUsernameAndPassword(String username, String password);
 }

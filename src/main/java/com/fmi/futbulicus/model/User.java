@@ -17,12 +17,17 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column( name = "name", nullable = false, unique = true)
+	@Column(name = "username", nullable = false, unique = true)
 	@Size(min=0, max=50)
-	private String name;
+	private String username;
 	
-	@Column( name = "password", nullable = false)
+	@Column(name = "password", nullable = false)
+	@Size(min=0, max=60)
 	private String password;
+	
+	@Column( name = "role", nullable = false)
+	@Size(min=0, max=20)
+	private String role;
 
 	public Integer getId() {
 		return id;
@@ -32,12 +37,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
@@ -47,7 +52,15 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+		
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	public User(){
 		
 	}
