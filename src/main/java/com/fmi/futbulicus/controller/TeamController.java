@@ -14,7 +14,7 @@ public class TeamController {
 	@Autowired
 	private TeamRepository teamRepository;
 	
-	@RequestMapping
+	@RequestMapping(value = "/teams")
 	public String getTeam(Model model) {
 		Team team = teamRepository.findOne(1L);
 		model.addAttribute("team", team);

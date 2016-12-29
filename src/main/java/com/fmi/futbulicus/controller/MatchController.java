@@ -13,22 +13,21 @@ import com.fmi.futbulicus.model.Match;
 import com.fmi.futbulicus.repository.MatchRepository;
 
 @Controller
-@RequestMapping("/matches")
 public class MatchController {
 	
 	@Autowired
 	private MatchRepository matchRepository;
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/matches", method = RequestMethod.GET)
 	public String getMatches(Model model) {
 		Iterable<Match> matches = matchRepository.findAll();
 		model.addAttribute("matches", matches);
 		return "matches";
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/matches/match/{id}", method = RequestMethod.GET)
 	public String getMatch(@PathVariable("id") Long id, Model model) {
 		Match match = matchRepository.findOne(id);
 		model.addAttribute("match", match);
-		return "matches";
+		return "match";
 	}
 }

@@ -10,7 +10,14 @@
 </head>
 <body>
 	<p>Matches</p>
-	<c:out value="${match}"></c:out><br/>
-	<c:out value="${matches}"></c:out><br/>
+	<ul>
+    <c:forEach items="${matches}" var="match">
+        <li>
+            <a href="${pageContext.request.contextPath}/matches/match/${match.id}">
+                <c:out value="${match}"></c:out>
+            </a>
+        </li>
+    </c:forEach>
+</ul>
 </body>
 </html>
