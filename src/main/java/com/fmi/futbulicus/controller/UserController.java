@@ -55,9 +55,7 @@ public class UserController {
 	@RequestMapping(value="/register", method = RequestMethod.POST)
 	public String registerPost(HttpSession session, @RequestParam("username") String name, @RequestParam("password") String password){
 		User user = userRepository.findByUsername(name);
-		System.out.println("user1");
 		if(user != null) {
-			System.out.println("user2");
 			UserDetails userDetails = userDetailsManager.loadUserByUsername(user.getUsername());
 			UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(),
 					userDetails.getAuthorities());
@@ -70,25 +68,32 @@ public class UserController {
 			newUser.setPassword(hashedPassword);
 			newUser.setRole("USER");
 			newUser = userRepository.save(newUser);
-			//authentication
-			UserDetails userDetails = userDetailsManager.loadUserByUsername(newUser.getUsername());
+	
+			UserDetails userDetails = userDetailsManager.loadUserByUsername(name);
 			UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(),
 					userDetails.getAuthorities());
-	        authenticationManager.authenticate(auth);
 			SecurityContextHolder.getContext().setAuthentication(auth);
-			
-			session.setAttribute("currentUser", newUser);
-			System.out.println("user3");
+
+			session.setAttribute("user", newUser);
 			return "home";
 		}
 	}
 	
 	@RequestMapping(value="/home", method = RequestMethod.GET)
 	public String home(HttpSession session){
-		if(session.getAttribute("user") != null) {
-			return "home";
-		} else {
-			return "login";
+		if(session.getAttribute("user") == null) {
+			User user = getCurrentUser();
+			session.setAttribute("user", user);
 		}
+		return "home";
+	}
+	
+	
+	public User getCurrentUser() {
+		org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User) SecurityContextHolder
+				.getContext().getAuthentication().getPrincipal();
+		String username = springUser.getUsername();
+		User user = userRepository.findByUsername(username);
+		return user;
 	}
 }
