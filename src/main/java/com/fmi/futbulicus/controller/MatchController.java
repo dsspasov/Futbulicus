@@ -1,7 +1,5 @@
 package com.fmi.futbulicus.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,13 +19,13 @@ public class MatchController {
 	public String getMatches(Model model) {
 		Iterable<Match> matches = matchRepository.findAll();
 		model.addAttribute("matches", matches);
-		return "matches";
+		return "/matches";
 	}
 	
 	@RequestMapping(value = "/matches/match/{id}", method = RequestMethod.GET)
 	public String getMatch(@PathVariable("id") Long id, Model model) {
 		Match match = matchRepository.findOne(id);
 		model.addAttribute("match", match);
-		return "match";
+		return "/match";
 	}
 }
