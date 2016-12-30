@@ -14,7 +14,7 @@ public class DisqusSsoUtils {
 	private static final String THREAD_ID = "5420484089";
 	private static final String FORUM = "futbulicus";
 	
-	
+	//TODO: need actual sso enable for our application from disqus
 	/**
 	 * Generates remote_auth_s3 parameter needed for performing /posts/create on Disqus.
 	 * @return remote_auth_s3 parameter's value
