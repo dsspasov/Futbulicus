@@ -4,17 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Register</title>
+<title>Futbulicus</title>
 </head>
 <body>
-	
-	<form method="POST" action="register">
-		<input type="text" name="username"/> <br/>
-		<input type="password" name="password"/> <br/>
-		<input type="submit" value="Register"/>
-	</form>
-
-	
-	<a href="login">Login</a>
+	<a href="/login">Login</a>|
+	<a href="/register">Register</a>
 </body>
 </html>

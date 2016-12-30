@@ -1,5 +1,7 @@
 package com.fmi.futbulicus.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +35,12 @@ public class UserController {
 	private UserDetailsService userDetailsManager;
 	@Autowired
     private AuthenticationManager authenticationManager;
+	
+	@RequestMapping(value={"/", "/index"}, method = RequestMethod.GET)
+	public String getIndex(HttpServletRequest request, HttpSession session, Model model){
+		return "index";
+	}
+	
 	
 	@RequestMapping(value="/login", method = RequestMethod.GET)
 	public String loginGet(HttpServletRequest request, HttpSession session, Model model){
@@ -96,4 +105,32 @@ public class UserController {
 		User user = userRepository.findByUsername(username);
 		return user;
 	}
+	
+	@RequestMapping(value="/users", method = RequestMethod.GET)
+	public String getUsers(HttpServletRequest request, HttpSession session, Model model){
+		List<User> users = (List<User>) userRepository.findAllByOrderByUsername();
+		model.addAttribute("users", users);
+		return "/users";
+	}
+	
+	@RequestMapping(value="/users/user/{id}", method = RequestMethod.GET)
+	public String getUser(@PathVariable("id") Integer id, HttpServletRequest request, HttpSession session, Model model) {
+		User user = userRepository.findOne(id);
+		model.addAttribute("user", user);
+		return "/user";
+	}
+	
+	@RequestMapping(value="/users/search", method = RequestMethod.GET)
+	public String searchUsers(@RequestParam(name="searchName", required=false) String username, Model model){
+		List<User> users;
+		if(username == null) {
+			users = (List<User>) userRepository.findAll();
+		} else {
+			users = userRepository.findByUsernameContainingOrderByUsername(username);
+		}
+		model.addAttribute("users", users);
+		return "/users";
+	}
+	
+	
 }
