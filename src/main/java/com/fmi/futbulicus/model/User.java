@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Email;
+
 @Entity
 @Table(name="users")
 public class User {
@@ -24,6 +26,10 @@ public class User {
 	@Column(name = "password", nullable = false)
 	@Size(min=0, max=60)
 	private String password;
+	
+	@Column(name = "email", nullable = false)
+	@Email
+	private String email;
 	
 	@Column( name = "role", nullable = false)
 	@Size(min=0, max=20)
@@ -53,6 +59,14 @@ public class User {
 		this.password = password;
 	}
 		
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getRole() {
 		return role;
 	}
