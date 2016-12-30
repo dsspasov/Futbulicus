@@ -10,6 +10,11 @@
 	<p>Home</p>
 	<div id="disqus_thread"></div>
 	<script>
+	var disqus_config = function () {
+	    // The generated payload which authenticates users with Disqus
+	    this.page.remote_auth_s3 = 'c0660c8924a67ba22260b4960e209da78cd0a29c';
+	    this.page.api_key = 'YLyDKkEyE4ezVawHoTDsyssEfAMxJEV2PHEIpOyH42PYVAg3DGGTT9YpmzM0iyvZ';
+	}
 		/**
 		 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
 		 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
