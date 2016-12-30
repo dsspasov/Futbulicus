@@ -59,15 +59,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.authorizeRequests()
-		.antMatchers("/", "/index", "/register", "/login").permitAll()
-		.antMatchers("/home").access("hasRole('ROLE_USER')")
+		.antMatchers("/", "/index", "/register", "/login", "/footballers",
+				"/footballers/footballer", "/matches", "/matches/match", "/teams", "/teams/team", "/", "index").permitAll()
+		.antMatchers("/home", "/users").access("hasRole('ROLE_USER')")
 		.anyRequest().authenticated()
 		.and()
 		.formLogin()
 			.usernameParameter("username")
 			.passwordParameter("password")
 			.loginPage("/login")
-			/*.defaultSuccessUrl("/home", true)*/
+			.defaultSuccessUrl("/home", true)
 			.failureUrl("/login?status=error")
 		.permitAll()
 		.and()

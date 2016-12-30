@@ -8,6 +8,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+	
+	<c:import url="header.jsp"></c:import>
 	<p>${team.name}</p>
 	<ul>
 		<c:forEach items="${team.getFootballers()}" var="footballer">

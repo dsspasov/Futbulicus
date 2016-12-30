@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<c:import url="header.jsp"></c:import>
 	<c:out value="${match}"></c:out>
 </body>
 </html>
