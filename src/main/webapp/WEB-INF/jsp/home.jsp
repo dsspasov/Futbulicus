@@ -28,21 +28,22 @@
 		</tr>
 	</table>
 	<c:forEach begin="0" end="${teams.size() - 1}" var="index">
+		<c:set var="team" value="${teams.get(index).getAsJsonObject()}"></c:set>
 		<table>
 			<tr>
-				<td>${teams.get(index).getAsJsonObject().get("position").getAsInt()}|</td>
-				<td>${teams.get(index).getAsJsonObject().get("teamName").getAsString()}|</td>
+				<td>${team.get("position").getAsInt()}|</td>
+				<td><a href='${team.get("_links").getAsJsonObject().get("team").getAsJsonObject().get("href").getAsString()}'>${team.get("teamName").getAsString()}</a>|</td>
 				<td><img
-					src='${teams.get(index).getAsJsonObject().get("crestURI").getAsString()}'
+					src='${team.get("crestURI").getAsString()}'
 					width="14" height="20" />|</td>
-				<td>${teams.get(index).getAsJsonObject().get("playedGames").getAsInt()}|</td>
-				<td>${teams.get(index).getAsJsonObject().get("points").getAsInt()}|</td>
-				<td>${teams.get(index).getAsJsonObject().get("goals").getAsInt()}|</td>
-				<td>${teams.get(index).getAsJsonObject().get("goalsAgainst").getAsInt()}|</td>
-				<td>${teams.get(index).getAsJsonObject().get("goalDifference").getAsInt()}|</td>
-				<td>${teams.get(index).getAsJsonObject().get("wins").getAsInt()}|</td>
-				<td>${teams.get(index).getAsJsonObject().get("draws").getAsInt()}|</td>
-				<td>${teams.get(index).getAsJsonObject().get("losses").getAsInt()}|</td>
+				<td>${team.get("playedGames").getAsInt()}|</td>
+				<td>${team.get("points").getAsInt()}|</td>
+				<td>${team.get("goals").getAsInt()}|</td>
+				<td>${team.get("goalsAgainst").getAsInt()}|</td>
+				<td>${team.get("goalDifference").getAsInt()}|</td>
+				<td>${team.get("wins").getAsInt()}|</td>
+				<td>${team.get("draws").getAsInt()}|</td>
+				<td>${team.get("losses").getAsInt()}|</td>
 			</tr>
 		</table>
 		<br />
