@@ -9,23 +9,58 @@
 <title>Home</title>
 </head>
 <body>
-	
+
 	<c:import url="header.jsp"></c:import>
 	<p>Home</p>
+	<table>
+		<tr>
+			<td>position</td>
+			<td>team name</td>
+			<td>logo</td>
+			<td>played games</td>
+			<td>points</td>
+			<td>goals</td>
+			<td>goals against</td>
+			<td>goal difference</td>
+			<td>wins</td>
+			<td>draws</td>
+			<td>losses</td>
+		</tr>
+	</table>
+	<c:forEach begin="0" end="${teams.size() - 1}" var="index">
+		<table>
+			<tr>
+				<td>${teams.get(index).getAsJsonObject().get("position").getAsInt()}|</td>
+				<td>${teams.get(index).getAsJsonObject().get("teamName").getAsString()}|</td>
+				<td><img
+					src='${teams.get(index).getAsJsonObject().get("crestURI").getAsString()}'
+					width="14" height="20" />|</td>
+				<td>${teams.get(index).getAsJsonObject().get("playedGames").getAsInt()}|</td>
+				<td>${teams.get(index).getAsJsonObject().get("points").getAsInt()}|</td>
+				<td>${teams.get(index).getAsJsonObject().get("goals").getAsInt()}|</td>
+				<td>${teams.get(index).getAsJsonObject().get("goalsAgainst").getAsInt()}|</td>
+				<td>${teams.get(index).getAsJsonObject().get("goalDifference").getAsInt()}|</td>
+				<td>${teams.get(index).getAsJsonObject().get("wins").getAsInt()}|</td>
+				<td>${teams.get(index).getAsJsonObject().get("draws").getAsInt()}|</td>
+				<td>${teams.get(index).getAsJsonObject().get("losses").getAsInt()}|</td>
+			</tr>
+		</table>
+		<br />
+	</c:forEach>
 	<div id="disqus_thread"></div>
 	<script>
-	var disqus_config = function () {
-	    // The generated payload which authenticates users with Disqus
-	    this.page.remote_auth_s3 = 'c0660c8924a67ba22260b4960e209da78cd0a29c';
-	    this.page.api_key = 'YLyDKkEyE4ezVawHoTDsyssEfAMxJEV2PHEIpOyH42PYVAg3DGGTT9YpmzM0iyvZ';
-	}
+		var disqus_config = function() {
+			// The generated payload which authenticates users with Disqus
+			this.page.remote_auth_s3 = 'c0660c8924a67ba22260b4960e209da78cd0a29c';
+			this.page.api_key = 'YLyDKkEyE4ezVawHoTDsyssEfAMxJEV2PHEIpOyH42PYVAg3DGGTT9YpmzM0iyvZ';
+		}
 		/**
 		 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
 		 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-		 var disqus_config = function () {
-		 this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-		 this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-		 };
+		var disqus_config = function() {
+			this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
+			this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+		};
 		(function() { // DON'T EDIT BELOW THIS LINE
 			var d = document, s = d.createElement('script');
 			s.src = '//futbulicus.disqus.com/embed.js';
@@ -35,8 +70,8 @@
 	</script>
 	<noscript>
 		Please enable JavaScript to view the <a
-			href="https://disqus.com/?ref_noscript#disqus_thread">comments powered by
-			Disqus.</a>
+			href="https://disqus.com/?ref_noscript#disqus_thread">comments
+			powered by Disqus.</a>
 	</noscript>
 	<script id="dsq-count-scr" src="//futbulicus.disqus.com/count.js" async></script>
 </body>
