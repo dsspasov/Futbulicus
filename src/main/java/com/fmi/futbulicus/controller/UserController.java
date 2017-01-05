@@ -133,12 +133,10 @@ public class UserController {
 		in.close();
 
 		//print result
-		System.out.println(response.toString());
 		JsonElement jsonElement = gson.fromJson(response.toString(), JsonElement.class);
 		jsonObject = jsonElement.getAsJsonObject();
 		JsonArray jsonArray = new JsonArray();
 		jsonArray.addAll(jsonObject.get("standing").getAsJsonArray());
-		System.out.println("JSONARRAAY IS " + jsonArray);
 		session.setAttribute("teams", jsonArray);
 		return "home";
 	}
