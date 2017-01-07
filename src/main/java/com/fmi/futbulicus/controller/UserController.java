@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fmi.futbulicus.model.User;
 import com.fmi.futbulicus.repository.UserRepository;
+import com.fmi.futbulicus.utils.ApiUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -46,7 +47,6 @@ public class UserController {
     private AuthenticationManager authenticationManager;
 	
 	private static final String STANDINGS_URL = "https://euadmin4.backstage.spotme.com/api/v1/eid/cbe9ff2c721f63e6347ca3f66ce21177/nodehandlers/soccer/stats?type=table&id=426";
-	private final String USER_AGENT = "Mozilla/5.0";
 	
 	@RequestMapping(value={"/", "/index"}, method = RequestMethod.GET)
 	public String getIndex(HttpServletRequest request, HttpSession session, Model model){
@@ -107,36 +107,9 @@ public class UserController {
 			session.setAttribute("user", user);
 		}
 		
-		Gson gson = new Gson();
-		JsonObject jsonObject = new JsonObject();
-		URL obj = new URL(STANDINGS_URL);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-		// optional default is GET
-		con.setRequestMethod("GET");
-
-		//add request header
-		con.setRequestProperty("User-Agent", USER_AGENT);
-
-		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'GET' request to URL : " + STANDINGS_URL);
-		System.out.println("Response Code : " + responseCode);
-
-		BufferedReader in = new BufferedReader(
-		        new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
-		in.close();
-
-		//print result
-		JsonElement jsonElement = gson.fromJson(response.toString(), JsonElement.class);
-		jsonObject = jsonElement.getAsJsonObject();
+		JsonObject response = new Gson().fromJson(ApiUtils.makeRequestToApi(STANDINGS_URL), JsonElement.class).getAsJsonObject();
 		JsonArray jsonArray = new JsonArray();
-		jsonArray.addAll(jsonObject.get("standing").getAsJsonArray());
+		jsonArray.addAll(response.get("standing").getAsJsonArray());
 		session.setAttribute("teams", jsonArray);
 		return "home";
 	}
