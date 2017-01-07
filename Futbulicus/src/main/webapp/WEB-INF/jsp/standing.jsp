@@ -18,6 +18,7 @@
 				<div class="col-lg-12">
 					<div class="page-header">
 						<h1 id="tables">${leagueCaption} Table</h1>
+						<a href="/fixtures/${leagueId}">Fixtures</a>
 					</div>
 					<div class="bs-component">
 						<table class="table table-striped table-hover ">
@@ -67,6 +68,5 @@
 			</div>
 		</div>
 	</div>
-	<a href="/fixtures/${leagueId}">Fixtures</a>
 </body>
 </html>
