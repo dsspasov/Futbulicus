@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.authorizeRequests()
-		.antMatchers("/", "/index", "/home", "/register", "/login", "/footballers",
+		.antMatchers("/", "/index", "/home", "/register", "/login", "/standings", "/footballers",
 				"/footballers/footballer", "/matches", "/matches/match", "/teams", "/teams/team", "/").permitAll()
 		.antMatchers("/users").access("hasRole('ROLE_USER')")
 		.anyRequest().authenticated()

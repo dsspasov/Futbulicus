@@ -126,6 +126,7 @@ public class UserController {
 	
 	@RequestMapping(value="/standings/{id}")
 	public String getStandings(@PathVariable("id") String id, HttpSession session) throws JsonSyntaxException, IOException {
+		System.out.println("alabala");
 		if(session.getAttribute("user") == null) {
 			User user = getCurrentUser();
 			session.setAttribute("user", user);
@@ -146,11 +147,16 @@ public class UserController {
 	}
 	
 	
-	public User getCurrentUser() {
-		org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User) SecurityContextHolder
-				.getContext().getAuthentication().getPrincipal();
-		String username = springUser.getUsername();
-		User user = userRepository.findByUsername(username);
+	public User getCurrentUser() {		
+		User user = null;
+		if(!SecurityContextHolder
+				.getContext().getAuthentication().getPrincipal().getClass().equals(String.class)){
+			org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User) SecurityContextHolder
+					.getContext().getAuthentication().getPrincipal();
+			String username = springUser.getUsername();
+			user = userRepository.findByUsername(username);
+			
+		} 
 		return user;
 	}
 	
@@ -170,12 +176,9 @@ public class UserController {
 	
 	@RequestMapping(value="/users/search", method = RequestMethod.GET)
 	public String searchUsers(@RequestParam(name="searchName", required=false) String username, Model model){
-		//ApplicationContext context = new AnnotationConfigApplicationContext(UserController.class);
 		SearchService searchService = (SearchService) context.getBean("SearchServiceClient");
-		//List<User> users = searchService.search(username, userRepository);
 		List<User> users = new LinkedList<User>();
 		users = searchService.search(username);
-		//users = searchService.getUsers();
 		model.addAttribute("users", users);
 		return "/users";
 	}
