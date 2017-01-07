@@ -13,12 +13,6 @@
 	<c:import url="header.jsp"></c:import>
 	
 	<p>Home</p>
-	
-	<a href="/standings/436">Primera Division</a>
-	<a href="/standings/438">Serie A</a>
-	<a href="/standings/434">Ligue 1</a>
-	<a href="/standings/430">Bundesliga</a>
-	<a href="/standings/426">EPL</a>
 		
 	<c:if test="${user != null}">
 			<div id="disqus_thread"></div>
