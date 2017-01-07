@@ -1,5 +1,7 @@
 package com.fmi.futbulicus.controller;
 
+import static com.fmi.futbulicus.utils.ApiUtils.makeRequestToApi;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,9 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.remoting.rmi.RmiProxyFactoryBean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fmi.futbulicus.model.User;
 import com.fmi.futbulicus.repository.UserRepository;
-import com.fmi.futbulicus.service.SearchService;
 import com.fmi.futbulicus.utils.ApiUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -49,18 +47,8 @@ public class UserController {
 	private UserDetailsService userDetailsManager;
 	@Autowired
     private AuthenticationManager authenticationManager;
-	@Autowired
-	private ApplicationContext context;
-
+	
 	private static final String STANDINGS_URL = "https://euadmin4.backstage.spotme.com/api/v1/eid/cbe9ff2c721f63e6347ca3f66ce21177/nodehandlers/soccer/stats?type=table&id=426";
-	@Bean(name="SearchServiceClient")
-    public SearchService getSearchService() {
-        RmiProxyFactoryBean rmiProxyFactoryBean = new RmiProxyFactoryBean();
-        rmiProxyFactoryBean.setServiceUrl("rmi://localhost:1099/SearchService");
-        rmiProxyFactoryBean.setServiceInterface(SearchService.class);
-        rmiProxyFactoryBean.afterPropertiesSet();
-        return (SearchService) rmiProxyFactoryBean.getObject();
-    }
 	
 	@RequestMapping(value={"/", "/index"}, method = RequestMethod.GET)
 	public String getIndex(HttpServletRequest request, HttpSession session, Model model){
@@ -121,7 +109,7 @@ public class UserController {
 			session.setAttribute("user", user);
 		}
 		
-		JsonObject response = new Gson().fromJson(ApiUtils.makeRequestToApi(STANDINGS_URL), JsonElement.class).getAsJsonObject();
+		JsonObject response = new Gson().fromJson(makeRequestToApi(STANDINGS_URL), JsonElement.class).getAsJsonObject();
 		JsonArray jsonArray = new JsonArray();
 		jsonArray.addAll(response.get("standing").getAsJsonArray());
 		session.setAttribute("teams", jsonArray);
@@ -153,14 +141,15 @@ public class UserController {
 	
 	@RequestMapping(value="/users/search", method = RequestMethod.GET)
 	public String searchUsers(@RequestParam(name="searchName", required=false) String username, Model model){
-		//ApplicationContext context = new AnnotationConfigApplicationContext(UserController.class);
-		SearchService searchService = (SearchService) context.getBean("SearchServiceClient");
-		//List<User> users = searchService.search(username, userRepository);
-		List<User> users = new LinkedList<User>();
-		users = searchService.search(username);
-		//users = searchService.getUsers();
+		List<User> users;
+		if(username == null) {
+			users = (List<User>) userRepository.findAll();
+		} else {
+			users = userRepository.findByUsernameContainingOrderByUsername(username);
+		}
 		model.addAttribute("users", users);
 		return "/users";
 	}
+	
 	
 }
