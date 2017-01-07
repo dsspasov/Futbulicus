@@ -2,6 +2,8 @@ package com.fmi.futbulicus.model;
 
 import java.io.Serializable;
 
+import com.google.gson.Gson;
+
 public class Fixture implements Serializable{
 
 	/**
@@ -11,7 +13,7 @@ public class Fixture implements Serializable{
 	
 	private String date;
 	private String status;
-	private String matchDay;
+	private Integer matchday;
 	private String homeTeamName;
 	private String awayTeamName;
 	private int resultGoalsHomeTeam;
@@ -23,13 +25,13 @@ public class Fixture implements Serializable{
 
 	
 	
-	public Fixture(String date, String status, String matchDay,
+	public Fixture(String date, String status, Integer matchDay,
 			String homeTeamName, String awayTeamName, int resultGoalsHomeTeam,
 			int resultGoalsAwayTeam) {
 		super();
 		this.date = date;
 		this.status = status;
-		this.matchDay = matchDay;
+		this.matchday = matchDay;
 		this.homeTeamName = homeTeamName;
 		this.awayTeamName = awayTeamName;
 		this.resultGoalsHomeTeam = resultGoalsHomeTeam;
@@ -53,14 +55,24 @@ public class Fixture implements Serializable{
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-	public String getMatchDay() {
-		return matchDay;
+	
+	public Integer getMatchday() {
+		return matchday;
 	}
 
-	public void setMatchDay(String matchDay) {
-		this.matchDay = matchDay;
+
+
+	public void setMatchday(Integer matchday) {
+		this.matchday = matchday;
 	}
+
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+
 
 	public String getHomeTeamName() {
 		return homeTeamName;
@@ -93,5 +105,12 @@ public class Fixture implements Serializable{
 	public void setResultGoalsAwayTeam(int resultGoalsAwayTeam) {
 		this.resultGoalsAwayTeam = resultGoalsAwayTeam;
 	}
-	
+
+
+
+	@Override
+	public String toString() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}	
 }
