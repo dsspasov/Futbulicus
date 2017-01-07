@@ -3,6 +3,7 @@ package com.fmi.futbulicus.controller;
 import static com.fmi.futbulicus.utils.ApiUtils.makeRequestToApi;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,6 +37,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 
 @Controller
 public class UserController {
@@ -142,15 +144,11 @@ public class UserController {
 		JsonArray jsonArray = new JsonArray();
 		jsonArray.addAll(response.get("standing").getAsJsonArray());
 		System.out.println("STANDINGS ARE " + jsonArray);
+		session.setAttribute("leagueCaption", response.get("leagueCaption"));
+		session.setAttribute("leagueId", id);
 		session.setAttribute("teams", jsonArray);
 		
-		requestParams.put("type", "fixtures");
-		response = gson.fromJson(makeRequestToApi(STANDINGS_URL, requestParams), JsonObject.class);
-		System.out.println("ReESPONSE IS");
-		jsonArray = new JsonArray();
-		jsonArray.addAll(response.get("fixtures").getAsJsonArray());
-		System.out.println("FIXTURES ARE:" + jsonArray);
-		session.setAttribute("fixtures", jsonArray);
+		
 		
 		return "/standing";
 	}
