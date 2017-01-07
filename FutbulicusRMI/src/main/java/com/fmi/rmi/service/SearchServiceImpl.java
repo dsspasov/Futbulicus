@@ -7,10 +7,12 @@ import static com.fmi.rmi.utils.ApiUtils.makeRequestToApi;
 
 
 
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import com.fmi.futbulicus.model.Fixture;
 import com.google.gson.Gson;
@@ -51,7 +53,10 @@ public class SearchServiceImpl implements SearchService {
 			String awayTeamName = fixturesArray.get(j).getAsJsonObject().get("awayTeamName").getAsString();
 			String status = fixturesArray.get(j).getAsJsonObject().get("status").getAsString();
 			
-			if((homeTeamName.contains(name) || awayTeamName.contains(name)) && status.equalsIgnoreCase("FINISHED")) {
+			String patternString = "(?i:.*"+ name +".*)";
+
+			
+			if(( Pattern.matches(patternString, homeTeamName) || Pattern.matches(patternString, awayTeamName)) && status.equalsIgnoreCase("FINISHED")) {
 				Fixture fixture = new Fixture();
 				fixture.setDate(fixturesArray.get(j).getAsJsonObject().get("date").getAsString());
 				fixture.setMatchday(fixturesArray.get(j).getAsJsonObject().get("matchday").getAsInt());

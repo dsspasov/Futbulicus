@@ -37,16 +37,6 @@ import com.google.gson.JsonSyntaxException;
 
 @Controller
 public class UserController {
-
-//	@Autowired
-//	private UserRepository userRepository;
-//	@Autowired
-//	private PasswordEncoder passwordEncoder;
-//	
-//	@Autowired
-//	private UserDetailsService userDetailsManager;
-//	@Autowired
-//    private AuthenticationManager authenticationManager;
 	
 	private static final String STANDINGS_URL = "https://euadmin4.backstage.spotme.com/api/v1/eid/cbe9ff2c721f63e6347ca3f66ce21177/nodehandlers/soccer/stats?";
 	@Autowired
@@ -67,67 +57,14 @@ public class UserController {
 	}
 	
 	
-//	@RequestMapping(value="/login", method = RequestMethod.GET)
-//	public String loginGet(HttpServletRequest request, HttpSession session, Model model){
-//		if(session.getAttribute("user") != null) {
-//			return "home";
-//		} else {
-//			return "login";
-//		}
-//	}
-//	
-//	
-//	@RequestMapping(value="/register", method = RequestMethod.GET)
-//	public String registerGet(Authentication auth, HttpSession session){
-//		if(session.getAttribute("user") != null) {
-//			return "home";
-//		} else {
-//			return "register";
-//		}
-//	}
-	
-//	@RequestMapping(value="/register", method = RequestMethod.POST)
-//	public String registerPost(HttpSession session, @RequestParam("username") String name, @RequestParam("password") String password){
-//		User user = userRepository.findByUsername(name);
-//		if(user != null) {
-//			UserDetails userDetails = userDetailsManager.loadUserByUsername(user.getUsername());
-//			UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(),
-//					userDetails.getAuthorities());
-//	        authenticationManager.authenticate(auth);
-//			return "home";
-//		} else {
-//			String hashedPassword = passwordEncoder.encode(password);
-//			User newUser = new User();
-//			newUser.setUsername(name);
-//			newUser.setPassword(hashedPassword);
-//			newUser.setRole("USER");
-//			newUser = userRepository.save(newUser);
-//	
-//			UserDetails userDetails = userDetailsManager.loadUserByUsername(name);
-//			UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(),
-//					userDetails.getAuthorities());
-//			SecurityContextHolder.getContext().setAuthentication(auth);
-//
-//			session.setAttribute("user", newUser);
-//			return "home";
-//		}
-//	}
 	
 	@RequestMapping(value="/home", method = RequestMethod.GET)
 	public String home(HttpSession session) throws IOException{
-//		if(session.getAttribute("user") == null) {
-//			User user = getCurrentUser();
-//			session.setAttribute("user", user);
-//		}
 		return "home";
 	}
 	
 	@RequestMapping(value="/standings/{id}")
 	public String getStandings(@PathVariable("id") String id, HttpSession session) throws JsonSyntaxException, IOException {
-//		if(session.getAttribute("user") == null) {
-//			User user = getCurrentUser();
-//			session.setAttribute("user", user);
-//		}
 		
 		Gson gson = new Gson();
 		
@@ -151,7 +88,7 @@ public class UserController {
 	
 
 	@RequestMapping(value="/teams/search", method = RequestMethod.GET)
-	public String searchUsers(@RequestParam(name="name", required=false) String teamName, Model model) throws IOException{
+	public String searchTeam(@RequestParam(name="name", required=false) String teamName, Model model) throws IOException{
 		SearchService searchService = (SearchService) context.getBean("SearchServiceClient");
 		if(teamName == null) {
 			return "redirect:/home";
