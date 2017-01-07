@@ -40,12 +40,13 @@
 				</li>
 				</ul>
 			</li>
-			<li><a href="/teams">Teams</a></li>
+			<!-- <li><a href="/teams">Teams</a></li> -->
 			<li><a href="/matches">Matches</a></li>
-			<li><a href="/footballers">Footballers</a></li>
-			<li><c:if test="${user != null}">
+			<!-- <li><a href="/footballers">Footballers</a></li> -->
+			<%-- <li><c:if test="${user != null}">
 					<a href="/logout">Logout</a>
-				</c:if></li>
+				</c:if>
+			</li> --%>
 			</ul>
 		</div>
 	</div>
