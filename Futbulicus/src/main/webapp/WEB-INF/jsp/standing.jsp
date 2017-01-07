@@ -67,5 +67,6 @@
 			</div>
 		</div>
 	</div>
+	<a href="/fixtures/${leagueId}">Fixtures</a>
 </body>
 </html>
