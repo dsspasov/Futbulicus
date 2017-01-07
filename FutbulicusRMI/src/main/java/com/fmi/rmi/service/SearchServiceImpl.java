@@ -54,7 +54,7 @@ public class SearchServiceImpl implements SearchService {
 			if((homeTeamName.contains(name) || awayTeamName.contains(name)) && status.equalsIgnoreCase("FINISHED")) {
 				Fixture fixture = new Fixture();
 				fixture.setDate(fixturesArray.get(j).getAsJsonObject().get("date").getAsString());
-				fixture.setMatchDay(fixturesArray.get(j).getAsJsonObject().get("matchday").getAsString());
+				fixture.setMatchday(fixturesArray.get(j).getAsJsonObject().get("matchday").getAsInt());
 				fixture.setHomeTeamName(homeTeamName);
 				fixture.setAwayTeamName(awayTeamName);
 				fixture.setStatus(status);
