@@ -24,7 +24,6 @@ public class SearchDAO implements ISearchDAO{
 		return instance;
 	}
 	
-	
 	@Override
 	public List<UserDTO> findByUsernameContainingOrderByUsername(String searchUsername) {
 		String sql = "SELECT * FROM users AS u WHERE u.username LIKE ? ORDER BY u.username";

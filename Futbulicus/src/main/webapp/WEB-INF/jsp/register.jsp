@@ -9,8 +9,9 @@
 <body>
 	
 	<form method="POST" action="register">
-		<input type="text" name="username"/> <br/>
-		<input type="password" name="password"/> <br/>
+		Username: <input type="text" name="username"/> <br/>
+		Password: <input type="password" name="password"/> <br/>
+		Repeat Password: <input type="password" name="t"/> <br/>
 		<input type="submit" value="Register"/>
 	</form>
 
