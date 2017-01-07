@@ -31,6 +31,7 @@
 						<th>Status</th>
 						<th>Home team</th>
 						<th>Away team</th>
+						<th>Result</th>
 					</tr>
 					<c:forEach begin="0" end="${matches.size() - 1}" var="index">
 					<tr>
@@ -44,6 +45,12 @@
 							<span>homeWin: </span> ${odds.get("homeWin").getAsString()}
 							<span>draw: </span> ${odds.get("draw").getAsString()}
 							<span>awayWin: </span> ${odds.get("awayWin").getAsString()}
+						</td>
+						<c:set var="result" value='${match.get("result").getAsJsonObject()}'></c:set>
+						<td>
+							${result.get("goalsHomeTeam").getAsInt()}
+							${result.get("goalsAwayTeam").getAsInt()}
+							
 						</td>
 					</tr>		
 					</c:forEach>
