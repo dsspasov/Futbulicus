@@ -3,6 +3,7 @@ package com.fmi.futbulicus.controller;
 import static com.fmi.futbulicus.utils.ApiUtils.makeRequestToApi;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,6 +23,8 @@ import com.google.gson.JsonObject;
 @Controller
 public class TeamController {
 
+	private static final String PLAYERS_TEAM_URL = "https://euadmin4.backstage.spotme.com/api/v1/eid/cbe9ff2c721f63e6347ca3f66ce21177/nodehandlers/soccer/stats?";
+	
 	@Autowired
 	private TeamRepository teamRepository;
 	
@@ -35,13 +38,17 @@ public class TeamController {
 	@RequestMapping(value = "/teams/team/{id}")
 	public String getTeam(@PathVariable("id") String id, HttpServletRequest request, Model model) throws IOException {
 		System.out.println("ID is " + id);
-		String team = makeRequestToApi("http://api.football-data.org/v1/teams/" + id);
+		HashMap<String, String> requestParams = new HashMap<>();
+		requestParams.put("type", "team");
+		requestParams.put("id", id);
+		String team = makeRequestToApi(PLAYERS_TEAM_URL, requestParams);
 		JsonObject jsonTeam = new Gson().fromJson(team, JsonObject.class);
 		System.out.println("Response is :" + jsonTeam);
 		//System.out.println("Response's players are: " + jsonTeam.get("players").getAsJsonObject());
 		model.addAttribute("team", jsonTeam);
 		
-		JsonObject players = new Gson().fromJson(makeRequestToApi("http://api.football-data.org/v1/teams/" + id + "/players"), JsonObject.class);
+		requestParams.put("type", "players");
+		JsonObject players = new Gson().fromJson(makeRequestToApi(PLAYERS_TEAM_URL, requestParams), JsonObject.class);
 		JsonArray playersArray = new JsonArray();
 		playersArray.addAll(players.get("players").getAsJsonArray());
 		

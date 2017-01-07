@@ -5,16 +5,29 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 public class ApiUtils {
 
-	public static String makeRequestToApi(String url) throws IOException {
+	public static String makeRequestToApi(String url, HashMap<String, String> requestParams) throws IOException {
 		Gson gson = new Gson();
 		JsonObject jsonObject = new JsonObject();
+		StringBuilder sb = new StringBuilder(url);
+		Iterator it = requestParams.entrySet().iterator();
+		while(it.hasNext()){
+			Map.Entry pair = (Map.Entry) it.next();
+			sb.append(pair.getKey()).append("=").append(pair.getValue());
+			if(it.hasNext()) {
+				sb.append("&");
+			}
+		}
+		System.out.println("REQUEST URL IS " + sb.toString());
+		url = sb.toString();
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 

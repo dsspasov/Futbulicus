@@ -11,44 +11,15 @@
 <body>
 
 	<c:import url="header.jsp"></c:import>
+	
 	<p>Home</p>
-	<table>
-		<tr>
-			<td>position</td>
-			<td>team name</td>
-			<td>logo</td>
-			<td>played games</td>
-			<td>points</td>
-			<td>goals</td>
-			<td>goals against</td>
-			<td>goal difference</td>
-			<td>wins</td>
-			<td>draws</td>
-			<td>losses</td>
-		</tr>
-	</table>
-	<c:forEach begin="0" end="${teams.size() - 1}" var="index">
-		<c:set var="team" value="${teams.get(index).getAsJsonObject()}"></c:set>
-		<c:set var="team_href" value='${team.get("_links").getAsJsonObject().get("team").getAsJsonObject().get("href").getAsString()}'></c:set>
-		<table>
-			<tr>
-				<td>${team.get("position").getAsInt()}|</td>
-				<td><a href='/teams/team/${team_href.substring(team_href.lastIndexOf("/") + 1)}'>${team.get("teamName").getAsString()}</a>|</td>
-				<td><img
-					src='${team.get("crestURI").getAsString()}'
-					width="14" height="20" />|</td>
-				<td>${team.get("playedGames").getAsInt()}|</td>
-				<td>${team.get("points").getAsInt()}|</td>
-				<td>${team.get("goals").getAsInt()}|</td>
-				<td>${team.get("goalsAgainst").getAsInt()}|</td>
-				<td>${team.get("goalDifference").getAsInt()}|</td>
-				<td>${team.get("wins").getAsInt()}|</td>
-				<td>${team.get("draws").getAsInt()}|</td>
-				<td>${team.get("losses").getAsInt()}|</td>
-			</tr>
-		</table>
-		<br />
-	</c:forEach>
+	
+	<a href="/standings/436">Primera Division</a>
+	<a href="/standings/438">Serie A</a>
+	<a href="/standings/434">Ligue 1</a>
+	<a href="/standings/430">Bundesliga</a>
+	<a href="/standings/426">EPL</a>
+	
 	<div id="disqus_thread"></div>
 	<script>
 		var disqus_config = function() {
