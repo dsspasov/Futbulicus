@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.fmi.futbulicus.model.Match;
-import com.fmi.futbulicus.repository.MatchRepository;
+//import com.fmi.futbulicus.model.Match;
+//import com.fmi.futbulicus.repository.MatchRepository;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -27,8 +27,8 @@ public class MatchController {
 	
 	private static final String URL = "https://euadmin4.backstage.spotme.com/api/v1/eid/cbe9ff2c721f63e6347ca3f66ce21177/nodehandlers/soccer/stats?";
 	
-	@Autowired
-	private MatchRepository matchRepository;
+//	@Autowired
+//	private MatchRepository matchRepository;
 	@RequestMapping(value = "/matches", method = RequestMethod.GET)
 	public String getMatches(Model model) {
 		model.addAttribute("date", LocalDate.now().toString());
