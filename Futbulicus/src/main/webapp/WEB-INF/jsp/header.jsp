@@ -31,12 +31,6 @@ x
               </ul>
             </li>
             <li>
-              <a href="../help/">Help</a>
-            </li>
-            <li>
-            	<a href="/users">Users</a>
-			</li>
-            <li>
 				<a href="/teams">Teams</a>
 			</li>
             <li>
