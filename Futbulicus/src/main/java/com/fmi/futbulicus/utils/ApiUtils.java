@@ -13,9 +13,9 @@ public class ApiUtils {
 
 	public static String makeRequestToApi(String url, HashMap<String, String> requestParams) throws IOException {
 		StringBuilder sb = new StringBuilder(url);
-		Iterator it = requestParams.entrySet().iterator();
+		Iterator<Map.Entry<String, String>> it = requestParams.entrySet().iterator();
 		while(it.hasNext()){
-			Map.Entry pair = (Map.Entry) it.next();
+			Map.Entry<String, String> pair = (Map.Entry<String, String>) it.next();
 			sb.append(pair.getKey()).append("=").append(pair.getValue());
 			if(it.hasNext()) {
 				sb.append("&");

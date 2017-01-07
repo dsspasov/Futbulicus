@@ -75,6 +75,7 @@ public class MatchController {
 			}
 
 			model.addAttribute("matches", matches);
+			model.addAttribute("date", LocalDate.now().toString());
 		}
 
 		return "/matches";
