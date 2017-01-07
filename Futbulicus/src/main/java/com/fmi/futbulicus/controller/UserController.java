@@ -128,6 +128,7 @@ public class UserController {
 		System.out.println("RESPONSE IS " + response);
 		JsonArray jsonArray = new JsonArray();
 		jsonArray.addAll(response.get("standing").getAsJsonArray());
+		System.out.println("STANDINGS ARE " + jsonArray);
 		session.setAttribute("teams", jsonArray);
 		
 		return "/standing";
