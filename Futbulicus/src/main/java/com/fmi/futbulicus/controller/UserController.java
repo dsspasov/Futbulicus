@@ -53,7 +53,7 @@ public class UserController {
 	
 	@RequestMapping(value={"/", "/index"}, method = RequestMethod.GET)
 	public String getIndex(HttpServletRequest request, HttpSession session, Model model){
-		return "index";
+		return "redirect:home";
 	}
 	
 	
