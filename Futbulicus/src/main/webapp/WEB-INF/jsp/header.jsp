@@ -11,7 +11,7 @@ x
 <div class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="../" class="navbar-brand">Futbulicus</a>
+          <a href="../home" class="navbar-brand">Futbulicus</a>
           <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -23,18 +23,13 @@ x
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Leagues <span class="caret"></span></a>
               <ul class="dropdown-menu" aria-labelledby="themes">
-                <li><a href="../default/">EPL</a></li>
-                <li><a href="../cerulean/">Bundes Liga</a></li>
-                <li><a href="../cosmo/">Serie A</a></li>
-                <li><a href="../cosmo/">La Liga</a></li>
+                <li><a href="/standings/436">Primera Division</a></li>
+				<li><a href="/standings/438">Serie A</a></li>
+				<li><a href="/standings/434">Ligue 1</a></li>
+				<li><a href="/standings/430">Bundesliga</a></li>
+				<li><a href="/standings/426">EPL</a></li>					
               </ul>
             </li>
-            <li>
-              <a href="../help/">Help</a>
-            </li>
-            <li>
-            	<a href="/users">Users</a>
-			</li>
             <li>
 				<a href="/teams">Teams</a>
 			</li>
