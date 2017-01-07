@@ -12,12 +12,49 @@
 	
 	<c:import url="header.jsp"></c:import>
 	<p>Matches</p>
-	<ul>
-		<c:forEach items="${matches}" var="match">
-			<li><a href="/matches/match/${match.id}"> <c:out
-						value="${match.host.name}${match.result}${match.guest.name}"></c:out>
-			</a></li>
-		</c:forEach>
-	</ul>
+		
+	<form action="/matches/search" methos="GET">
+		<select name="competition">
+			<option value="436" selected>Primera Division</option>
+			<option value="438">Serie A</option>
+			<option value="434">Ligue 1</option>
+			<option value="430">Bundesliga</option>
+			<option value="426">EPL</option>
+		</select>
+		<input type="date" name="date" value="${date}">
+		<input type="submit" value="Search"/>
+		
+		<c:if test="${ not empty matches }">
+			<c:if test="${matches.size()>0}">
+				<table>
+					<tr>
+						<th>Status</th>
+						<th>Home team</th>
+						<th>Away team</th>
+					</tr>
+					<c:forEach begin="0" end="${matches.size() - 1}" var="index">
+					<tr>
+					<c:set var="match" value="${matches.get(index).getAsJsonObject()}"></c:set>
+						<td>${match.get("status").getAsString()}|</td>
+						<td>${match.get("homeTeamName").getAsString()}|</td>
+						<td>${match.get("awayTeamName").getAsString()}|</td>
+						<c:set var="odds" value='${match.get("odds").getAsJsonObject()}'></c:set>
+						<td>
+						
+							<span>homeWin: </span> ${odds.get("homeWin").getAsString()}
+							<span>draw: </span> ${odds.get("draw").getAsString()}
+							<span>awayWin: </span> ${odds.get("awayWin").getAsString()}
+						</td>
+					</tr>		
+					</c:forEach>
+				</table>
+			</c:if>
+			<c:if test="${matches.size()==0}">
+				<p>No matches</p>
+			</c:if>
+		</c:if>
+		
+	</form>
+	
 </body>
 </html>
