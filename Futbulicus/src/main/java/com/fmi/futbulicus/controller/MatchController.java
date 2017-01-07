@@ -4,6 +4,7 @@ import static com.fmi.futbulicus.utils.ApiUtils.makeRequestToApi;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.fmi.futbulicus.model.Fixture;
 //import com.fmi.futbulicus.model.Match;
 //import com.fmi.futbulicus.repository.MatchRepository;
 import com.google.gson.Gson;
@@ -93,10 +95,15 @@ public class MatchController {
 		System.out.println("Response IS");
 		JsonArray jsonArray = new JsonArray();
 		jsonArray.addAll(response.get("fixtures").getAsJsonArray());
-		List<JsonObject> list = gson.fromJson(jsonArray, new TypeToken<List<JsonObject>>() {
+		List<Fixture> list = gson.fromJson(jsonArray, new TypeToken<List<Fixture>>() {
 		}.getType());
-		System.out.println("LIIIST:" + list);
+		System.out.println("FIXTURE:" + list.get(0));
 		System.out.println("FIXTURES ARE:" + jsonArray);
+		Collections.sort(list, (o1, o2) -> o1.getMatchday().compareTo(o2.getMatchday()));
+		
+		JsonElement jsonElement = gson.toJsonTree(list, new TypeToken<List<Fixture>>() {}.getType());
+		jsonArray = jsonElement.getAsJsonArray();
+		System.out.println("LIIIST:" + list);
 		session.setAttribute("fixtures", jsonArray);
 		
 		return "/fixtures";
