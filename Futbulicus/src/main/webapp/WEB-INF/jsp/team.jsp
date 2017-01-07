@@ -31,9 +31,11 @@
 	</table>
 	<c:forEach begin="0" end="${players.size() - 1}" var="index">
 		<c:set var="player" value="${players.get(index).getAsJsonObject()}"></c:set>
+		<c:set var="kitNo" value='${player.get("jerseyNumber")}'></c:set>
 		<table>
 			<tr>
-				<td>${player.get("jerseyNumber").getAsString()} |</td>
+				<c:if test="${player.get('jerseyNumber') != 'null'}"><td>${player.get("jerseyNumber")}</td></c:if>
+				<c:if test="${player.get('jerseyNumber') == 'null'}"><td> - |</td></c:if>
 				<td>${player.get("name").getAsString()} |</td>
 				<td>${player.get("nationality").getAsString()} |</td>
 				<td>${player.get("position").getAsString()} |</td>

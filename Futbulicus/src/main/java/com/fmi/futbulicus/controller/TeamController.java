@@ -54,6 +54,8 @@ public class TeamController {
 		
 		model.addAttribute("players", playersArray);
 		
+		System.out.println("PLAYERS ARE:" + playersArray);
+		
 		return "/team";
 	}
 	
