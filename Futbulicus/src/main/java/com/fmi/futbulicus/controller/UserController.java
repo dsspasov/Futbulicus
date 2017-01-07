@@ -3,9 +3,7 @@ package com.fmi.futbulicus.controller;
 import static com.fmi.futbulicus.utils.ApiUtils.makeRequestToApi;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fmi.futbulicus.model.Fixture;
 import com.fmi.futbulicus.model.UserDTO;
 //import com.fmi.futbulicus.repository.UserRepository;
 import com.fmi.futbulicus.service.SearchService;
