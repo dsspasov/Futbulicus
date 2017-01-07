@@ -2,12 +2,9 @@ package com.fmi.futbulicus.controller;
 
 import static com.fmi.futbulicus.utils.ApiUtils.makeRequestToApi;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +31,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fmi.futbulicus.model.User;
 import com.fmi.futbulicus.repository.UserRepository;
 import com.fmi.futbulicus.service.SearchService;
-import com.fmi.futbulicus.utils.ApiUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -58,7 +54,6 @@ public class UserController {
 	@Autowired
 	private ApplicationContext context;
 
-	private static final String STANDINGS_URL = "https://euadmin4.backstage.spotme.com/api/v1/eid/cbe9ff2c721f63e6347ca3f66ce21177/nodehandlers/soccer/stats?type=table&id=426";
 	@Bean(name="SearchServiceClient")
     public SearchService getSearchService() {
         RmiProxyFactoryBean rmiProxyFactoryBean = new RmiProxyFactoryBean();
