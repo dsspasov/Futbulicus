@@ -29,10 +29,11 @@
 	</table>
 	<c:forEach begin="0" end="${teams.size() - 1}" var="index">
 		<c:set var="team" value="${teams.get(index).getAsJsonObject()}"></c:set>
+		<c:set var="team_href" value='${team.get("_links").getAsJsonObject().get("team").getAsJsonObject().get("href").getAsString()}'></c:set>
 		<table>
 			<tr>
 				<td>${team.get("position").getAsInt()}|</td>
-				<td><a href='${team.get("_links").getAsJsonObject().get("team").getAsJsonObject().get("href").getAsString()}'>${team.get("teamName").getAsString()}</a>|</td>
+				<td><a href='/teams/team/${team_href.substring(team_href.lastIndexOf("/") + 1)}'>${team.get("teamName").getAsString()}</a>|</td>
 				<td><img
 					src='${team.get("crestURI").getAsString()}'
 					width="14" height="20" />|</td>
