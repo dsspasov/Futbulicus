@@ -24,17 +24,7 @@ import com.google.gson.JsonObject;
 public class TeamController {
 
 	private static final String PLAYERS_TEAM_URL = "https://euadmin4.backstage.spotme.com/api/v1/eid/cbe9ff2c721f63e6347ca3f66ce21177/nodehandlers/soccer/stats?";
-	
-//	@Autowired
-//	private TeamRepository teamRepository;
-//	
-//	@RequestMapping(value = "/teams", method = RequestMethod.GET)
-//	public String getTeams(Model model) {
-//		Iterable<Team> teams = teamRepository.findAll();
-//		model.addAttribute("teams", teams);
-//		return "/teams";
-//	}
-	
+		
 	@RequestMapping(value = "/teams/team/{id}")
 	public String getTeam(@PathVariable("id") String id, HttpServletRequest request, Model model) throws IOException {
 		System.out.println("ID is " + id);
