@@ -153,6 +153,7 @@ public class UserController {
 //		User user = userRepository.findByUsername(username);
 //		return user;
 //	}
+
 	
 //	@RequestMapping(value="/users", method = RequestMethod.GET)
 //	public String getUsers(HttpServletRequest request, HttpSession session, Model model){
@@ -170,12 +171,9 @@ public class UserController {
 	
 	@RequestMapping(value="/users/search", method = RequestMethod.GET)
 	public String searchUsers(@RequestParam(name="searchName", required=false) String username, Model model){
-		//ApplicationContext context = new AnnotationConfigApplicationContext(UserController.class);
 		SearchService searchService = (SearchService) context.getBean("SearchServiceClient");
-		//List<User> users = searchService.search(username, userRepository);
 		List<User> users = new LinkedList<User>();
 		users = searchService.search(username);
-		//users = searchService.getUsers();
 		model.addAttribute("users", users);
 		return "/users";
 	}
