@@ -28,15 +28,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fmi.futbulicus.model.Fixture;
-import com.fmi.futbulicus.model.UserDTO;
-//import com.fmi.futbulicus.repository.UserRepository;
 import com.fmi.futbulicus.service.SearchService;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
 
 @Controller
 public class UserController {

@@ -11,8 +11,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class DisqusSsoUtils {
 	
 	private static final String SECRET_KEY = "mDiCKBOYdHbvYqkVQR4KqJXB61OK8NXlJCXTlDcOIFlbX6z7eUblqGL3qvCAKXSF";
-	private static final String THREAD_ID = "5420484089";
-	private static final String FORUM = "futbulicus";
+	//private static final String THREAD_ID = "5420484089";
+	//private static final String FORUM = "futbulicus";
 	
 	//TODO: need actual sso enable for our application from disqus
 	/**
