@@ -23,6 +23,7 @@
 						</h1>
 						<h3>Market Value
 							${team.get("squadMarketValue").getAsString()}</h3>
+						<h2>Players</h2>
 					</div>
 					<div class="bs-component">
 						<table class="table table-striped table-hover ">
@@ -49,11 +50,11 @@
 										<c:if test="${player.get('jerseyNumber') == 'null'}">
 											<td>- |</td>
 										</c:if>
-										<td>${player.get("name").getAsString()}|</td>
-										<td>${player.get("nationality").getAsString()}|</td>
-										<td>${player.get("position").getAsString()}|</td>
-										<td>${player.get("dateOfBirth").getAsString()}|</td>
-										<td>${player.get("marketValue").getAsString()}|</td>
+										<td>${player.get("name").getAsString()}</td>
+										<td>${player.get("nationality").getAsString()}</td>
+										<td>${player.get("position").getAsString()}</td>
+										<td>${player.get("dateOfBirth").getAsString()}</td>
+										<td>${player.get("marketValue").getAsString()}</td>
 									</tr>
 								</c:forEach>
 							</tbody>
