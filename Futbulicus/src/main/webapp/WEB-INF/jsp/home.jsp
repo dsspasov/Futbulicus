@@ -37,17 +37,19 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${fixtures}" var="fixture">
-									<tr>
-										<td>${fixture.homeTeamName}</td>
-										<td>${fixture.resultGoalsHomeTeam}</td>
-										<td>${fixture.resultGoalsAwayTeam}</td>
-										<td>${fixture.awayTeamName}</td>
-										<td>${fixture.date}</td>
-										<td>${fixture.status}</td>
-										<td>${fixture.matchday}</td>
-									</tr>
-								</c:forEach>
+								<c:if test="${not empty fixtures}">
+									<c:forEach items="${fixtures}" var="fixture">
+										<tr>
+											<td>${fixture.homeTeamName}</td>
+											<td>${fixture.resultGoalsHomeTeam}</td>
+											<td>${fixture.resultGoalsAwayTeam}</td>
+											<td>${fixture.awayTeamName}</td>
+											<td>${fixture.date}</td>
+											<td>${fixture.status}</td>
+											<td>${fixture.matchday}</td>
+										</tr>
+									</c:forEach>
+								</c:if>
 							</tbody>
 						</table>
 					</div>
@@ -55,7 +57,6 @@
 			</div>
 		</div>
 
-		<c:if test="${user != null}">
 			<div id="disqus_thread"></div>
 			<script>
 				var disqus_config = function() {
@@ -84,8 +85,6 @@
 			</noscript>
 			<script id="dsq-count-scr" src="//futbulicus.disqus.com/count.js"
 				async></script>
-		</c:if>
-
 	</div>
 </body>
 </html>
