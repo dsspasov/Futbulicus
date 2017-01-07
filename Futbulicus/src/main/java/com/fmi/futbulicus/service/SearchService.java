@@ -2,13 +2,13 @@ package com.fmi.futbulicus.service;
 
 import java.util.List;
 
-import com.fmi.futbulicus.model.User;
+import com.fmi.futbulicus.model.UserDTO;
 
 public interface SearchService {
 	
 	void search();
 	
-	List<User> getUsers();
+	List<UserDTO> getUsers();
 	
-	List<User> search(String username);
+	List<UserDTO> search(String username);
 }

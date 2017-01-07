@@ -46,5 +46,43 @@
 		</table>
 		<br />
 	</c:forEach>
+
+	<c:forEach begin="0" end="${fixtures.size() - 1}" var="index">
+		<c:set var="fixture" value="${fixtures.get(index).getAsJsonObject()}" />
+		<c:out value="Match day ${fixture.get('matchDay').getAsString()}" />
+		<c:if test="${index == 0}">
+			<table>
+				<tr>
+					<td>${fixture.get("homeTeamName")}</td>
+					<td>${fixture.get("result").getAsJsonObject().get("goalsHomeTeam")}</td>
+					<td>${fixture.get("result").getAsJsonObject().get("goalsAwayTeam")}</td>
+					<td>${fixture.get("awayTeamName")}</td>
+				</tr>
+				<tr>
+					<td>${fixture.get("date")}</td>
+				</tr>
+				<tr>
+					<td>${fixture.get("status")}</td>
+				</tr>
+			</table>
+		</c:if>
+		<c:if
+			test="${index != 0 && fixture.get('matchDay') != fixtures.get(index - 1).getAsJsonObject().get('matchDay')}"></c:if>
+		<br />
+		<table>
+			<tr>
+				<td>${fixture.get("homeTeamName")}</td>
+				<td>${fixture.get("result").getAsJsonObject().get("goalsHomeTeam")}</td>
+				<td>${fixture.get("result").getAsJsonObject().get("goalsAwayTeam")}</td>
+				<td>${fixture.get("awayTeamName")}</td>
+			</tr>
+			<tr>
+				<td>${fixture.get("date")}</td>
+			</tr>
+			<tr>
+				<td>${fixture.get("status")}</td>
+			</tr>
+		</table>
+	</c:forEach>
 </body>
 </html>
