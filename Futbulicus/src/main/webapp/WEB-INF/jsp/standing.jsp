@@ -7,49 +7,65 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
-<body>
-	<h2>${leagueCaption}</h2>
-	<table>
-		<tr>
-			<td>position</td>
-			<td>team name</td>
-			<td>logo</td>
-			<td>played games</td>
-			<td>points</td>
-			<td>goals</td>
-			<td>goals against</td>
-			<td>goal difference</td>
-			<td>wins</td>
-			<td>draws</td>
-			<td>losses</td>
-		</tr>
-	</table>
-	<c:forEach begin="0" end="${teams.size() - 1}" var="index">
-		<c:set var="team" value="${teams.get(index).getAsJsonObject()}"></c:set>
-		<c:set var="team_href"
-			value='${team.get("_links").getAsJsonObject().get("team").getAsJsonObject().get("href").getAsString()}'></c:set>
-		<table>
-			<tr>
-				<td>${team.get("position").getAsInt()}|</td>
-				<td><a
-					href='/teams/team/${team_href.substring(team_href.lastIndexOf("/") + 1)}'>${team.get("teamName").getAsString()}</a>|</td>
-				<td><img src='${team.get("crestURI").getAsString()}' width="14"
-					height="20" />|</td>
-				<td>${team.get("playedGames").getAsInt()}|</td>
-				<td>${team.get("points").getAsInt()}|</td>
-				<td>${team.get("goals").getAsInt()}|</td>
-				<td>${team.get("goalsAgainst").getAsInt()}|</td>
-				<td>${team.get("goalDifference").getAsInt()}|</td>
-				<td>${team.get("wins").getAsInt()}|</td>
-				<td>${team.get("draws").getAsInt()}|</td>
-				<td>${team.get("losses").getAsInt()}|</td>
-			</tr>
-		</table>
-		<br />
-	</c:forEach>
-	
-	<a href="/fixtures/${leagueId}">Fixtures</a>
 
-	
+<body>
+	<div class="container">
+		<c:import url="header.jsp"></c:import>
+
+		<div class="bs-docs-section">
+
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="page-header">
+						<h1 id="tables">${leagueCaption}table</h1>
+					</div>
+					<div class="bs-component">
+						<table class="table table-striped table-hover ">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Team</th>
+									<th>GP</th>
+									<th>W</th>
+									<th>D</th>
+									<th>L</th>
+									<th>GF</th>
+									<th>GA</th>
+									<th>GD</th>
+									<th>PTS</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach begin="0" end="${teams.size() - 1}" var="index">
+									<c:set var="team" value="${teams.get(index).getAsJsonObject()}"></c:set>
+									<c:set var="team_href"
+										value='${team.get("_links").getAsJsonObject().get("team").getAsJsonObject().get("href").getAsString()}'></c:set>
+									<tr
+										class="${team.get('position').getAsInt() < 4 ? 'info' : ''} ${team.get('position').getAsInt() > 17 ? 'danger' : ''}">
+										<td>${team.get("position").getAsInt()}</td>
+										<td><a
+											href='/teams/team/${team_href.substring(team_href.lastIndexOf("/") + 1)}'><img
+												src='${team.get("crestURI").getAsString()}' width="14"
+												height="20" /> ${team.get("teamName").getAsString()}</a></td>
+										<td>${team.get("playedGames").getAsInt()}</td>
+										<td>${team.get("wins").getAsInt()}</td>
+										<td>${team.get("draws").getAsInt()}</td>
+										<td>${team.get("losses").getAsInt()}</td>
+										<td>${team.get("goals").getAsInt()}</td>
+										<td>${team.get("goalsAgainst").getAsInt()}</td>
+										<td>${team.get("goalDifference").getAsInt()}</td>
+										<td>${team.get("points").getAsInt()}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+						<div id="source-button" class="btn btn-primary btn-xs"
+							style="display: none;">&lt; &gt;</div>
+					</div>
+					<!-- /example -->
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

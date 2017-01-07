@@ -8,41 +8,62 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<div class="container">
 
-	<c:import url="header.jsp"></c:import>
-	<h4>Club</h4>
-	<table>
-		<tr>
-			<td><img src='${team.get("crestUrl").getAsString()}' width="50" height="80" />Name:${team.get("name").getAsString()}</td>
-			<td>Value: ${team.get("squadMarketValue").getAsString()}</td>
-		</tr>
-	</table>
-	<br/>
-	<h4>Players</h4>
-	<table>
-		<tr>
-			<td>Kit # |</td>
-			<td>Name |</td>
-			<td>Nationality |</td>
-			<td>Position |</td>
-			<td>Date of birth |</td>
-			<td>Market value |</td>
-		</tr>
-	</table>
-	<c:forEach begin="0" end="${players.size() - 1}" var="index">
-		<c:set var="player" value="${players.get(index).getAsJsonObject()}"></c:set>
-		<c:set var="kitNo" value='${player.get("jerseyNumber")}'></c:set>
-		<table>
-			<tr>
-				<c:if test="${player.get('jerseyNumber') != 'null'}"><td>${player.get("jerseyNumber")}</td></c:if>
-				<c:if test="${player.get('jerseyNumber') == 'null'}"><td> - |</td></c:if>
-				<td>${player.get("name").getAsString()} |</td>
-				<td>${player.get("nationality").getAsString()} |</td>
-				<td>${player.get("position").getAsString()} |</td>
-				<td>${player.get("dateOfBirth").getAsString()} |</td>
-				<td>${player.get("marketValue").getAsString()} |</td>
-			</tr>
-		</table>
-	</c:forEach>
+		<c:import url="header.jsp"></c:import>
+
+		<div class="bs-docs-section">
+
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="page-header">
+						<h1 id="tables">
+							<img src='${team.get("crestUrl").getAsString()}' width=50 " />
+							${team.get("name").getAsString()}
+						</h1>
+						<h3>Market Value
+							${team.get("squadMarketValue").getAsString()}</h3>
+					</div>
+					<div class="bs-component">
+						<table class="table table-striped table-hover ">
+							<thead>
+								<tr>
+									<th>Kit #</th>
+									<th>Name</th>
+									<th>Nationality</th>
+									<th>Position</th>
+									<th>Date of birth</th>
+									<th>Market value</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<c:forEach begin="0" end="${players.size() - 1}" var="index">
+									<c:set var="player"
+										value="${players.get(index).getAsJsonObject()}"></c:set>
+									<c:set var="kitNo" value='${player.get("jerseyNumber")}'></c:set>
+									<tr>
+										<c:if test="${player.get('jerseyNumber') != 'null'}">
+											<td>${player.get("jerseyNumber")}</td>
+										</c:if>
+										<c:if test="${player.get('jerseyNumber') == 'null'}">
+											<td>- |</td>
+										</c:if>
+										<td>${player.get("name").getAsString()}|</td>
+										<td>${player.get("nationality").getAsString()}|</td>
+										<td>${player.get("position").getAsString()}|</td>
+										<td>${player.get("dateOfBirth").getAsString()}|</td>
+										<td>${player.get("marketValue").getAsString()}|</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+						<div id="source-button" class="btn btn-primary btn-xs"
+							style="display: none;">&lt; &gt;</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
