@@ -144,7 +144,7 @@ public class UserController {
 		JsonArray jsonArray = new JsonArray();
 		jsonArray.addAll(response.get("standing").getAsJsonArray());
 		System.out.println("STANDINGS ARE " + jsonArray);
-		session.setAttribute("leagueCaption", response.get("leagueCaption"));
+		session.setAttribute("leagueCaption", response.get("leagueCaption").getAsString());
 		session.setAttribute("leagueId", id);
 		session.setAttribute("teams", jsonArray);
 		
