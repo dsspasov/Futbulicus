@@ -13,6 +13,44 @@
 	<c:import url="header.jsp"></c:import>
 	
 	<p>Home</p>
+	
+	<a href="/standings/436">Primera Division</a>
+	<a href="/standings/438">Serie A</a>
+	<a href="/standings/434">Ligue 1</a>
+	<a href="/standings/430">Bundesliga</a>
+	<a href="/standings/426">EPL</a>
+
+
+	<form method="GET" action="/teams/search">
+		<input name="name" type="text"/>
+		<input type="submit" value="Search"/>
+	</form>
+	
+	<table>
+		<tr>
+			<td>date</td>
+			<td>status</td>
+			<td>matchDay</td>
+			<td>homeTeamName</td>
+			<td>awayTeamName</td>
+			<td>resultGoalsHomeTeam</td>
+			<td>resultGoalsAwayTeam</td>
+		</tr>
+		<c:forEach items="${fixtures}" var="fixture" >
+			<tr>
+				<td>${fixture.date}</td>
+				<td>${fixture.status}</td>
+				<td>${fixture.matchDay}</td>
+				<td>${fixture.homeTeamName}</td>
+				<td>${fixture.status}</td>
+				<td>${fixture.resultGoalsHomeTeam}</td>
+				<td>${fixture.resultGoalsAwayTeam}</td>
+			</tr>
+	
+		</c:forEach>
+	</table>
+	
+	
 		
 	<c:if test="${user != null}">
 			<div id="disqus_thread"></div>

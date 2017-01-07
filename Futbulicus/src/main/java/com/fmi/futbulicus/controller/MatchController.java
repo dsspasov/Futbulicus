@@ -29,9 +29,7 @@ import com.google.gson.reflect.TypeToken;
 public class MatchController {
 
 	private static final String URL = "https://euadmin4.backstage.spotme.com/api/v1/eid/cbe9ff2c721f63e6347ca3f66ce21177/nodehandlers/soccer/stats?";
-
-	// @Autowired
-	// private MatchRepository matchRepository;
+	
 	@RequestMapping(value = "/matches", method = RequestMethod.GET)
 	public String getMatches(Model model) {
 		model.addAttribute("date", LocalDate.now().toString());

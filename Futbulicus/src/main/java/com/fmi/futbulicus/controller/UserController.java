@@ -153,37 +153,19 @@ public class UserController {
 		return "/standing";
 	}
 	
-	
-//	public User getCurrentUser() {
-//		org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User) SecurityContextHolder
-//				.getContext().getAuthentication().getPrincipal();
-//		String username = springUser.getUsername();
-//		User user = userRepository.findByUsername(username);
-//		return user;
-//	}
 
-	
-//	@RequestMapping(value="/users", method = RequestMethod.GET)
-//	public String getUsers(HttpServletRequest request, HttpSession session, Model model){
-//		List<User> users = (List<User>) userRepository.findAllByOrderByUsername();
-//		model.addAttribute("users", users);
-//		return "/users";
-//	}
-	
-//	@RequestMapping(value="/users/user/{id}", method = RequestMethod.GET)
-//	public String getUser(@PathVariable("id") Integer id, HttpServletRequest request, HttpSession session, Model model) {
-//		User user = userRepository.findOne(id);
-//		model.addAttribute("user", user);
-//		return "/user";
-//	}
-	
-	@RequestMapping(value="/users/search", method = RequestMethod.GET)
-	public String searchUsers(@RequestParam(name="searchName", required=false) String username, Model model){
+	@RequestMapping(value="/teams/search", method = RequestMethod.GET)
+	public String searchUsers(@RequestParam(name="name", required=false) String teamName, Model model) throws IOException{
 		SearchService searchService = (SearchService) context.getBean("SearchServiceClient");
-		List<UserDTO> users = new LinkedList<UserDTO>();
-		users = searchService.search(username);
-		model.addAttribute("users", users);
-		return "/users";
+		if(teamName == null) {
+			return "redirect:/home";
+		} else {
+			List<Fixture> teamFixtures = searchService.getFootballerByName(teamName);
+			model.addAttribute("fixtures", teamFixtures);
+			return "/home";
+		}
+		
+		
 	}
 	
 }
