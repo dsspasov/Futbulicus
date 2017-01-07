@@ -1,4 +1,4 @@
-package com.fmi.futbulicus.model;
+/*package com.fmi.futbulicus.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -110,3 +110,4 @@ public class Footballer {
 	
 	
 }
+*/

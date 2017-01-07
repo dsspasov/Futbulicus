@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fmi.futbulicus.model.User;
+import com.fmi.futbulicus.model.UserDTO;
 //import com.fmi.futbulicus.repository.UserRepository;
 import com.fmi.futbulicus.service.SearchService;
 import com.google.gson.Gson;
@@ -131,16 +131,26 @@ public class UserController {
 //			session.setAttribute("user", user);
 //		}
 		
+		Gson gson = new Gson();
+		
 		HashMap<String, String> requestParams = new HashMap<>();
 		requestParams.put("type", "table");
 		requestParams.put("id", id);
 		
-		JsonObject response = new Gson().fromJson(makeRequestToApi(STANDINGS_URL, requestParams), JsonElement.class).getAsJsonObject();
+		JsonObject response = gson.fromJson(makeRequestToApi(STANDINGS_URL, requestParams), JsonElement.class).getAsJsonObject();
 		System.out.println("RESPONSE IS " + response);
 		JsonArray jsonArray = new JsonArray();
 		jsonArray.addAll(response.get("standing").getAsJsonArray());
 		System.out.println("STANDINGS ARE " + jsonArray);
 		session.setAttribute("teams", jsonArray);
+		
+		requestParams.put("type", "fixtures");
+		response = gson.fromJson(makeRequestToApi(STANDINGS_URL, requestParams), JsonObject.class);
+		System.out.println("ReESPONSE IS");
+		jsonArray = new JsonArray();
+		jsonArray.addAll(response.get("fixtures").getAsJsonArray());
+		System.out.println("FIXTURES ARE:" + jsonArray);
+		session.setAttribute("fixtures", jsonArray);
 		
 		return "/standing";
 	}
@@ -172,7 +182,7 @@ public class UserController {
 	@RequestMapping(value="/users/search", method = RequestMethod.GET)
 	public String searchUsers(@RequestParam(name="searchName", required=false) String username, Model model){
 		SearchService searchService = (SearchService) context.getBean("SearchServiceClient");
-		List<User> users = new LinkedList<User>();
+		List<UserDTO> users = new LinkedList<UserDTO>();
 		users = searchService.search(username);
 		model.addAttribute("users", users);
 		return "/users";
