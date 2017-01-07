@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +35,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 
 @Controller
 public class UserController {
@@ -48,7 +50,7 @@ public class UserController {
 	@Autowired
     private AuthenticationManager authenticationManager;
 	
-	private static final String STANDINGS_URL = "https://euadmin4.backstage.spotme.com/api/v1/eid/cbe9ff2c721f63e6347ca3f66ce21177/nodehandlers/soccer/stats?type=table&id=426";
+	private static final String STANDINGS_URL = "https://euadmin4.backstage.spotme.com/api/v1/eid/cbe9ff2c721f63e6347ca3f66ce21177/nodehandlers/soccer/stats?";
 	
 	@RequestMapping(value={"/", "/index"}, method = RequestMethod.GET)
 	public String getIndex(HttpServletRequest request, HttpSession session, Model model){
@@ -108,12 +110,27 @@ public class UserController {
 			User user = getCurrentUser();
 			session.setAttribute("user", user);
 		}
+		return "home";
+	}
+	
+	@RequestMapping(value="/standings/{id}")
+	public String getStandings(@PathVariable("id") String id, HttpSession session) throws JsonSyntaxException, IOException {
+		if(session.getAttribute("user") == null) {
+			User user = getCurrentUser();
+			session.setAttribute("user", user);
+		}
 		
-		JsonObject response = new Gson().fromJson(makeRequestToApi(STANDINGS_URL), JsonElement.class).getAsJsonObject();
+		HashMap<String, String> requestParams = new HashMap<>();
+		requestParams.put("type", "table");
+		requestParams.put("id", id);
+		
+		JsonObject response = new Gson().fromJson(makeRequestToApi(STANDINGS_URL, requestParams), JsonElement.class).getAsJsonObject();
+		System.out.println("RESPONSE IS " + response);
 		JsonArray jsonArray = new JsonArray();
 		jsonArray.addAll(response.get("standing").getAsJsonArray());
 		session.setAttribute("teams", jsonArray);
-		return "home";
+		
+		return "/standing";
 	}
 	
 	
