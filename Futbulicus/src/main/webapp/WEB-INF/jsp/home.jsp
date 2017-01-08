@@ -13,50 +13,7 @@
 
 		<c:import url="header.jsp"></c:import>
 
-		<div class="bs-docs-section">
-
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="page-header">
-						<h1 id="tables">Fixtures</h1>	
-						<form method="GET" action="/teams/search">
-							<input name="name" type="text" /> <input type="submit" value="Search" />
-						</form>
-					</div>
-					<div class="bs-component">
-						<table class="table table-striped table-hover ">
-							<thead>
-								<tr>
-									<th>Home Team</th>
-									<th></th>
-									<th></th>
-									<th>Away Team</th>
-									<th>Date</th>
-									<th>Status</th>
-									<th>Match Day</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:if test="${not empty fixtures}">
-									<c:forEach items="${fixtures}" var="fixture">
-										<tr>
-											<td>${fixture.homeTeamName}</td>
-											<td>${fixture.resultGoalsHomeTeam}</td>
-											<td>${fixture.resultGoalsAwayTeam}</td>
-											<td>${fixture.awayTeamName}</td>
-											<td>${fixture.date}</td>
-											<td>${fixture.status}</td>
-											<td>${fixture.matchday}</td>
-										</tr>
-									</c:forEach>
-								</c:if>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-
+		
 			<div id="disqus_thread"></div>
 			<script>
 				var disqus_config = function() {
