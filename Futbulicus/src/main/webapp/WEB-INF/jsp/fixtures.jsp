@@ -52,8 +52,8 @@
 									</c:if>
 									<tr>
 										<td>${fixture.get("homeTeamName")}</td>
-										<td>${fixture.get("result").getAsJsonObject().get("goalsHomeTeam")}</td>
-										<td>${fixture.get("result").getAsJsonObject().get("goalsAwayTeam")}</td>
+										<td>${fixture.get("resultGoalsHomeTeam")}</td>
+										<td>${fixture.get("resultGoalsAwayTeam")}</td>
 										<td>${fixture.get("awayTeamName")}</td>
 										<td>${fixture.get("date")}</td>
 										<td>${fixture.get("status")}</td>

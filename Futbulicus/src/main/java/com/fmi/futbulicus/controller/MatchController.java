@@ -4,6 +4,7 @@ import static com.fmi.futbulicus.utils.ApiUtils.makeRequestToApi;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -37,21 +38,19 @@ import com.google.gson.reflect.TypeToken;
 public class MatchController {
 
 	private static final String URL = "https://euadmin4.backstage.spotme.com/api/v1/eid/cbe9ff2c721f63e6347ca3f66ce21177/nodehandlers/soccer/stats?";
-	
-	
+
 	@Autowired
 	private ApplicationContext context;
 
-	@Bean(name="SearchServiceClient")
-    public SearchService getSearchService() {
-        RmiProxyFactoryBean rmiProxyFactoryBean = new RmiProxyFactoryBean();
-        rmiProxyFactoryBean.setServiceUrl("rmi://localhost:1099/SearchService");
-        rmiProxyFactoryBean.setServiceInterface(SearchService.class);
-        rmiProxyFactoryBean.afterPropertiesSet();
-        return (SearchService) rmiProxyFactoryBean.getObject();
-    }
-	
-	
+	@Bean(name = "SearchServiceClient")
+	public SearchService getSearchService() {
+		RmiProxyFactoryBean rmiProxyFactoryBean = new RmiProxyFactoryBean();
+		rmiProxyFactoryBean.setServiceUrl("rmi://localhost:1099/SearchService");
+		rmiProxyFactoryBean.setServiceInterface(SearchService.class);
+		rmiProxyFactoryBean.afterPropertiesSet();
+		return (SearchService) rmiProxyFactoryBean.getObject();
+	}
+
 	@RequestMapping(value = "/matches", method = RequestMethod.GET)
 	public String getMatches(Model model) {
 		model.addAttribute("date", LocalDate.now().toString());
@@ -98,10 +97,11 @@ public class MatchController {
 		return "/matches";
 	}
 
-	@RequestMapping(value="/matches/search-by-team", method = RequestMethod.GET)
-	public String searchTeam(@RequestParam(name="name", required=false) String teamName, Model model) throws IOException{
+	@RequestMapping(value = "/matches/search-by-team", method = RequestMethod.GET)
+	public String searchTeam(@RequestParam(name = "name", required = false) String teamName, Model model)
+			throws IOException {
 		SearchService searchService = (SearchService) context.getBean("SearchServiceClient");
-		if(teamName == null || teamName.trim().equals("")) {
+		if (teamName == null || teamName.trim().equals("")) {
 			return "redirect:/matches";
 		} else {
 			List<Fixture> teamFixtures = searchService.getFootballerByName(teamName);
@@ -111,11 +111,10 @@ public class MatchController {
 			return "/matches";
 		}
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/fixtures/{id}")
-	public String getFixtures(@PathVariable("id") String id, HttpSession session) throws JsonSyntaxException, IOException {
+	public String getFixtures(@PathVariable("id") String id, HttpSession session)
+			throws JsonSyntaxException, IOException {
 		Gson gson = new Gson();
 
 		HashMap<String, String> requestParams = new HashMap<>();
@@ -126,17 +125,35 @@ public class MatchController {
 		System.out.println("Response IS");
 		JsonArray jsonArray = new JsonArray();
 		jsonArray.addAll(response.get("fixtures").getAsJsonArray());
-		List<Fixture> list = gson.fromJson(jsonArray, new TypeToken<List<Fixture>>() {
-		}.getType());
-		System.out.println("FIXTURE:" + list.get(0));
-		System.out.println("FIXTURES ARE:" + jsonArray);
+		List<Fixture> list = new ArrayList<>();
+		for (JsonElement obj : jsonArray) {
+			System.out.println("JSONELEMENT:" + obj);
+			Fixture fixture = new Fixture();
+			fixture.setHomeTeamName(obj.getAsJsonObject().get("homeTeamName").getAsString());
+			fixture.setAwayTeamName(obj.getAsJsonObject().get("awayTeamName").getAsString());
+			fixture.setDate(obj.getAsJsonObject().get("date").getAsString());
+			if (!obj.getAsJsonObject().get("result").getAsJsonObject().get("goalsHomeTeam").isJsonNull()
+					&& !obj.getAsJsonObject().get("result").getAsJsonObject().get("goalsAwayTeam").isJsonNull()) {
+				fixture.setResultGoalsHomeTeam(
+						obj.getAsJsonObject().get("result").getAsJsonObject().get("goalsHomeTeam").getAsInt());
+				fixture.setResultGoalsAwayTeam(
+						obj.getAsJsonObject().get("result").getAsJsonObject().get("goalsAwayTeam").getAsInt());
+			} else {
+				fixture.setResultGoalsHomeTeam(0);
+				fixture.setResultGoalsAwayTeam(0);
+			}
+			fixture.setMatchday(obj.getAsJsonObject().get("matchday").getAsInt());
+			fixture.setStatus(obj.getAsJsonObject().get("status").getAsString());
+			list.add(fixture);
+		}
 		Collections.sort(list, (o1, o2) -> o1.getMatchday().compareTo(o2.getMatchday()));
-		
-		JsonElement jsonElement = gson.toJsonTree(list, new TypeToken<List<Fixture>>() {}.getType());
+
+		JsonElement jsonElement = gson.toJsonTree(list, new TypeToken<List<Fixture>>() {
+		}.getType());
+
 		jsonArray = jsonElement.getAsJsonArray();
-		System.out.println("LIIIST:" + list);
 		session.setAttribute("fixtures", jsonArray);
-		
+
 		return "/fixtures";
 	}
 }
