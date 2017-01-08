@@ -65,9 +65,26 @@
 														<c:set var="odds"
 															value='${match.get("odds").getAsJsonObject()}'></c:set>
 	
+														
 														<td>${match.get("homeTeamName").getAsString()}</td>
-														<td>${result.get("goalsHomeTeam").getAsInt()}</td>
-														<td>${result.get("goalsAwayTeam").getAsInt()}</td>
+														
+														<td>
+															<c:if test="${result.get('goalsHomeTeam') != 'null'}">
+																${result.get("goalsHomeTeam").getAsInt()}
+															</c:if>
+															<c:if test="${result.get('goalsHomeTeam') == 'null'}">
+															-
+															</c:if>
+														</td>
+														<td>
+															<c:if test="${result.get('goalsAwayTeam') != 'null'}">
+																${result.get("goalsAwayTeam").getAsInt()}
+															</c:if>
+															
+															<c:if test="${result.get('goalsAwayTeam') == 'null'}">
+																-
+															</c:if>
+														</td>
 														<td>${match.get("awayTeamName").getAsString()}</td>
 														<td>${match.get("date").getAsString()}</td>
 														<td>${match.get("status").getAsString()}</td>
