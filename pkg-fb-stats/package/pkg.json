@@ -1,0 +1,16 @@
+{
+  "name": "fb-stats",
+  "version": "0.1.0",
+  "info": {
+    "description": "",
+    "owner": ""
+  },
+  "dependencies": {},
+  "operations": {
+    "handlers": {
+      "action": "attach",
+      "doc": "_design/nodehandlers",
+      "attachment_name": "{{filepath}}"
+    }
+  }
+}
